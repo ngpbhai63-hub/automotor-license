@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: automotor-license-api
+    runtime: node
+    plan: starter
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: automotor-license-db
+          property: connectionString
+      - key: ADMIN_SECRET
+        sync: false
+      - key: LICENSE_JWT_SECRET
+        sync: false
+databases:
+  - name: automotor-license-db
+    plan: basic-256mb
